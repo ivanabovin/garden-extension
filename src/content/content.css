@@ -1,8 +1,10 @@
+.jam {
+  z-index: 9999;
+}
 .editor {
   position: fixed;
   left: 16px;
   top: 16px;
-  z-index: 999;
   padding-top: 4px;
   background: #ffffff;
   border: 1px solid #e0e0e0;
