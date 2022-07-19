@@ -14,3 +14,6 @@ event.on('onShowContent', function (show) {
   void chrome.runtime.sendMessage({ type: 'show', show });
 });
 
+if (localStorage.getItem('development') === 'true') {
+  event.emit('onClickedExtension');
+}
