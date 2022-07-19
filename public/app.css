@@ -1,4 +1,4 @@
-.jam {
+.root {
   z-index: 9999;
   position: fixed;
   top: 0;
@@ -11,11 +11,25 @@
   font-family: "Segoe UI", sans-serif;
   font-size: 14px;
   line-height: 20px;
+}
+.app {
   padding: 16px;
 }
 input, button {
-  font: inherit;
-  border: 1px solid #dbdcdd;
+  display: inline-block;
   padding: 0 10px;
+  border: 1px solid #dbdcdd;
+  outline: none;
+  font-family: inherit;
+  font-size: inherit;
   line-height: 30px;
+}
+input {
+  background-color: #ffffff;
+}
+button {
+  background-color: #f0f0f0;
+}
+input:focus, button:focus {
+  border-color: #abacad;
 }

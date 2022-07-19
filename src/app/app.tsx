@@ -1,8 +1,10 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
+import { store } from './store';
 
 export const App = observer(() => {
-  return <div className="frame">
+  console.log('store', store);
+  return <div className="app">
     <div>
       <input type="text" />
     </div>

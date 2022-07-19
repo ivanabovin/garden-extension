@@ -1,6 +1,5 @@
 import * as p from 'path';
 import CopyPlugin from 'copy-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 function path(path) {
   return p.resolve(path);
@@ -12,20 +11,14 @@ function config(env, argv) {
     devtool: argv.mode === 'development' ? 'inline-source-map' : false,
     entry: {
       background: path('src/background.ts'),
-      content: path('src/content/content.tsx'),
+      content: path('src/content/index.ts'),
+      app: path('src/app/index.ts'),
     },
     output: {
       path: path('dist'),
       filename: '[name].js',
     },
-    optimization: {
-      splitChunks: {
-        name: 'vendor',
-        chunks(chunk) {
-          return chunk.name !== 'background';
-        },
-      },
-    },
+    optimization: {},
     performance: false,
     module: {
       rules: [
@@ -34,45 +27,12 @@ function config(env, argv) {
           use: 'ts-loader',
           exclude: /node_modules/,
         },
-        {
-          test: /\.css$/,
-          use: [
-            {
-              loader: MiniCssExtractPlugin.loader,
-              options: {},
-            },
-            {
-              loader: 'css-loader',
-              options: {
-                importLoaders: 1,
-                sourceMap: false,
-                modules: { mode: 'icss' },
-              },
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                postcssOptions: {
-                  ident: 'postcss',
-                  config: false,
-                  plugins: [],
-                },
-                sourceMap: false,
-              },
-            },
-          ],
-          sideEffects: true,
-        },
       ],
     },
     resolve: {
       extensions: ['.ts', '.tsx', '.js'],
     },
     plugins: [
-      new MiniCssExtractPlugin({
-        filename: '[name].css',
-        chunkFilename: '[id].css',
-      }),
       new CopyPlugin({
         patterns: [{ from: path('public'), to: path('dist') }],
         options: {},
