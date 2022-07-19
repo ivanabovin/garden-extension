@@ -1,15 +1,7 @@
 import './content.css';
+import './react';
 import './store';
 import { event } from './event';
-
-// @ts-ignore
-window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = {
-  _renderers: {},
-  supportsFiber: true,
-  inject: () => ({}),
-  onCommitFiberRoot: () => ({}),
-  onCommitFiberUnmount: () => ({}),
-};
 
 chrome.runtime.onMessage.addListener(function (message) {
   if (message.type === 'click') {
