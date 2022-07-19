@@ -1,9 +1,10 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { store } from './store';
+import { toJson } from './util/json';
 
 export const App = observer(() => {
-  console.log('store', store);
+  console.log('store:', toJson(store));
   return <div className="app">
     <div>
       <input type="text" />
