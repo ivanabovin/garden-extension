@@ -24,7 +24,7 @@ export function parseArray<T>(key: string, parse: (json: Record<string, any>) =>
   try {
     return array.map(json => isObject(json) ? parse(json) : undefined).filter(isDefined);
   } catch (e) {
-    console.error('failed parse ' + key, e);
+    console.error('failed parse key: ' + key, e);
     return [];
   }
 }

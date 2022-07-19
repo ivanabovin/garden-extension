@@ -1,17 +1,18 @@
 import { makeAutoObservable } from 'mobx';
 import { parseArray } from './util/storage';
+import { ensureString, optionalString } from './util/object';
 
-class Language {
+export class Language {
   name: string;
   text: string;
 
-  constructor(name: string, text: string) {
+  constructor(name: unknown, text: unknown) {
     makeAutoObservable(this);
-    this.name = name;
-    this.text = text;
+    this.name = ensureString(name);
+    this.text = optionalString(text, '');
   }
 
-  static parse(json: Record<string, any>): Language | undefined {
+  static parse(json: Record<string, unknown>): Language | undefined {
     return new Language(json.name, json.text);
   }
 }

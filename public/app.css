@@ -15,6 +15,9 @@
 .app {
   padding: 16px;
 }
+code, pre {
+  font-family: 'Consolas', monospace;
+}
 input, button {
   display: inline-block;
   padding: 0 10px;
