@@ -1,5 +1,6 @@
 import './content.css';
 import './react';
+import './frame';
 import './store';
 import { event } from './event';
 

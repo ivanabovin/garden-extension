@@ -1,11 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import { observer } from 'mobx-react-lite';
-import { store } from './store';
 
 export const App = observer(() => {
-  const display = store.show ? 'block' : 'none';
-  return <div className="frame" style={{ display }}>
+  return <div className="frame">
     <div>
       <input type="text" />
     </div>
@@ -35,25 +32,3 @@ export const App = observer(() => {
     </div>
   </div>;
 });
-
-function createFrame() {
-  const frame = document.createElement('iframe');
-  frame.style.zIndex = '9999';
-  frame.style.position = 'fixed';
-  frame.style.top = '0';
-  frame.style.right = '0';
-  frame.style.width = '400px';
-  frame.style.height = '100vh';
-  frame.style.background = '#ffffff';
-  return frame;
-}
-
-export function render() {
-  const frame = createFrame();
-  document.body.append(frame);
-  const root = document.createElement('div');
-  root.classList.add('jam');
-  const body = frame.contentDocument!.body;
-  body.append(root);
-  ReactDOM.createRoot(root).render(<App />);
-}
