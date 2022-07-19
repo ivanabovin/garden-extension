@@ -1,38 +1,24 @@
 import './content.css';
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { App } from './app';
+import './store';
+import { event } from './event';
 
-const root = document.createElement('div');
-root.classList.add('jam');
-
-let init = false;
-let show = false;
-
-function sendShowEvent() {
-  void chrome.runtime.sendMessage({ type: 'show', show });
-}
-
-function render() {
-  document.body.append(root);
-  ReactDOM.createRoot(root).render(<App />);
-  init = true;
-  show = true;
-  sendShowEvent();
-}
-
-function toggleShow() {
-  show = !show;
-  root.style.display = show ? 'block' : 'none';
-  sendShowEvent();
-}
+// @ts-ignore
+window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = {
+  _renderers: {},
+  supportsFiber: true,
+  inject: () => ({}),
+  onCommitFiberRoot: () => ({}),
+  onCommitFiberUnmount: () => ({}),
+};
 
 chrome.runtime.onMessage.addListener(function (message) {
   if (message.type === 'click') {
-    if (!init) render();
-    else toggleShow();
+    event.emit('onClickedExtension');
   }
   return true;
 });
 
-if (localStorage.getItem('development') === 'true') render();
+event.on('onShowContent', function (show) {
+  void chrome.runtime.sendMessage({ type: 'show', show });
+});
+
