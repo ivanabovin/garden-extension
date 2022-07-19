@@ -1,17 +1,20 @@
-import { App } from './app';
+import { render } from './app';
 import { event } from './event';
+import { makeAutoObservable } from 'mobx';
 
 export class Store {
+  show = false;
+
   private mount = false;
-  private show = false;
 
   constructor() {
+    makeAutoObservable(this);
     event.on('onClickedExtension', this.onClickedExtension);
   }
 
   onClickedExtension = () => {
     if (!this.mount) {
-      App.render();
+      render();
       this.mount = true;
     }
     this.show = !this.show;
