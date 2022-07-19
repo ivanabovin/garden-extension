@@ -1,7 +1,6 @@
 import * as p from 'path';
 import CopyPlugin from 'copy-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import postcss_prepend_selector from 'postcss-prepend-selector';
 
 function path(path) {
   return p.resolve(path);
@@ -56,9 +55,7 @@ function config(env, argv) {
                 postcssOptions: {
                   ident: 'postcss',
                   config: false,
-                  plugins: [
-                    postcss_prepend_selector({ selector: '.jam ' }),
-                  ],
+                  plugins: [],
                 },
                 sourceMap: false,
               },
