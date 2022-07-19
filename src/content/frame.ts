@@ -26,10 +26,13 @@ function onClickedExtension(frame: HTMLIFrameElement) {
 function render() {
   const frame = createFrame();
   document.body.append(frame);
+  const doc = frame.contentDocument!;
+  const style = doc.createElement('style');
+  style.innerText = '.root { background: lightyellow; }';
+  doc.head.append(style);
   const root = document.createElement('div');
-  root.classList.add('jam');
-  const body = frame.contentDocument!.body;
-  body.append(root);
+  root.classList.add('root');
+  doc.body.append(root);
   ReactDOM.createRoot(root).render(React.createElement(App));
   event.on('onClickedExtension', () => onClickedExtension(frame));
   event.emit('onShowContent', true);
