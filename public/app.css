@@ -46,6 +46,11 @@ button:focus, button:hover {
 button:active {
   transform: scale(0.9);
 }
+button:disabled, button.disabled {
+  color: #b0b0b0;
+  border-color: #dbdcdd;
+  transform: none;
+}
 button.link {
   background: none;
   border: none;

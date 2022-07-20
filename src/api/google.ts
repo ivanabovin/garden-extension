@@ -36,5 +36,9 @@ export type TranslateResponse = {
   // spell: object
 };
 
-// fetch('https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=fr&dt=t&dt=bd&dt=at&dj=1&q=order+created')
-//   .then(r => r.json()).then((r: TranslateResponse) => console.log(JSON.stringify(r, null, '  ')));
+export async function translate(from: string, to: string, text: string): Promise<string> {
+  const url = 'https://translate.googleapis.com/translate_a/single';
+  const response = await fetch(`${url}?client=gtx&sl=${from}&tl=${to}&dt=t&dj=1&q=${encodeURIComponent(text)}`);
+  const json = await response.json() as TranslateResponse;
+  return json.sentences[0].trans;
+}

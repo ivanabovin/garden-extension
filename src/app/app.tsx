@@ -2,6 +2,7 @@ import React, { ChangeEvent, useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Language, store, Translation } from './store';
 import { runInAction } from 'mobx';
+import { api } from './api';
 
 export const TextBox = observer(() => {
   const onChangeLang = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
@@ -12,13 +13,16 @@ export const TextBox = observer(() => {
     const text = e.target.value;
     runInAction(() => store.text = text);
   }, []);
+  const onClickTranslate = useCallback(() => {
+    api.translate();
+  }, []);
   const language = Language.take(store.lang);
   return <div className="row">
     <select className="simple" value={store.lang} title={language.title} onChange={onChangeLang}>
       {Language.all.map(lang => <option key={lang.code} value={lang.code} title={lang.title}>{lang.code}</option>)}
     </select>
     <input value={store.text} onChange={onChangeText} />
-    <button>Translate</button>
+    <button disabled={store.busy} onClick={onClickTranslate}>Translate</button>
   </div>;
 });
 

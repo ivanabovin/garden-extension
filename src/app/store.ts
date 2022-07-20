@@ -50,6 +50,7 @@ export class Translation {
 }
 
 export class Store {
+  busy = false;
   lang: string = 'en';
   text: string = '';
   translations: Translation[] = [];
