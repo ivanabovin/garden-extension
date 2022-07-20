@@ -41,18 +41,18 @@ export const TranslationBox = observer(({ translation }: { translation: Translat
     store.removeTranslation(translation);
   }, []);
   const onClickRestore = useCallback(() => {
-    runInAction(() => translation.removed = false);
+    runInAction(() => translation.disabled = false);
   }, []);
   const language = Language.take(translation.lang);
-  const { removed } = translation;
-  return <div className={cn('row', 'translation', removed && 'removed')} style={{ marginTop: 8 }}>
+  const { disabled } = translation;
+  return <div className={cn('row', 'translation', disabled && 'disabled')} style={{ marginTop: 8 }}>
     <select className="button" style={{ fontWeight: 600 }}
       value={translation.lang} title={language.title} onChange={onChangeLang}>
       {Language.all.map(lang => <option key={lang.code} value={lang.code} title={lang.title}>{lang.code}</option>)}
     </select>
     <input value={translation.text} onChange={onChangeText} />
-    <button className={cn('link', removed && 'remove')} title="Remove" onClick={onClickDelete}>&#x2716;</button>
-    {translation.removed && <button className="link" title="Restore" onClick={onClickRestore}>&#x25cb;</button>}
+    <button className={cn('link', disabled && 'remove')} title="Remove" onClick={onClickDelete}>&#x2716;</button>
+    {translation.disabled && <button className="link" title="Restore" onClick={onClickRestore}>&#x25cb;</button>}
   </div>;
 });
 

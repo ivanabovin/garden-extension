@@ -84,7 +84,7 @@ div.row > * {
 .row > *:last-child {
   margin-right: 0;
 }
-.translation.removed {
+.translation.disabled {
   opacity: 0.5;
 }
 .translation button.remove {

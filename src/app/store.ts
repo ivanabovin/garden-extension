@@ -37,7 +37,7 @@ export class Translation {
 
   lang: string = 'en';
   text: string = '';
-  removed = false;
+  disabled = false;
 
   constructor(lang: string) {
     makeAutoObservable(this);
@@ -71,8 +71,8 @@ export class Store {
   }
 
   removeTranslation(translation: Translation) {
-    if (!translation.removed) {
-      translation.removed = true;
+    if (!translation.disabled) {
+      translation.disabled = true;
       return;
     }
     const index = this.translations.indexOf(translation);

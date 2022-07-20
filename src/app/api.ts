@@ -10,7 +10,7 @@ export class Api {
     runInAction(() => store.busy = true);
     const promises = store.translations.map(translation => {
       runInAction(() => translation.text = '');
-      if (!translation.removed) {
+      if (!translation.disabled) {
         return translate(lang, translation.lang, text)
           .then(text => runInAction(() => translation.text = text))
           .catch(e => console.error('translate error', e));
