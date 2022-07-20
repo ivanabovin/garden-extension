@@ -45,3 +45,8 @@ export function parseArray<T>(key: string, parse: (json: any) => T | undefined):
     return undefined;
   }
 }
+
+export function save(key: string, value: unknown): void {
+  if (value === undefined) localStorage.removeItem(key);
+  else localStorage.setItem(key, JSON.stringify(value));
+}

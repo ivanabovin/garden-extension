@@ -19,8 +19,7 @@ input, button, select {
   display: inline-block;
   border: 1px solid #dbdcdd;
   height: 32px;
-  width: 120px;
-  padding: 0 10px;
+  padding: 0 8px;
   margin: 0;
   line-height: 30px;
   outline: none;
@@ -30,27 +29,56 @@ input, button, select {
   vertical-align: middle;
   appearance: none;
 }
+input {
+  width: 120px;
+  background-color: #ffffff;
+}
+input:focus, input:hover {
+  border-color: #abacad;
+}
 button {
   cursor: pointer;
+  background-color: #f0f0f0;
+}
+button:focus, button:hover {
+  border-color: #abacad;
+}
+button:active {
+  transform: scale(0.9);
+}
+button.link {
+  background: none;
+  border: none;
+  color: #808080;
+}
+button.link:focus, button.link:hover {
+  color: #404040;
 }
 select {
   cursor: pointer;
   background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 550" width="32px" height="32px"><path d="m448.79 242.48-15.848-15.848-82.938 82.934-82.938-82.934-15.848 15.848 98.785 98.785z" fill="%23404040"/></svg>');
   background-position: right center;
   background-repeat: no-repeat;
+  padding-right: 32px;
 }
-label > * {
+select:focus, select:hover {
+  border-color: #abacad;
+}
+select:active {
+}
+select.simple {
+  background-image: none;
+  padding-right: 8px;
+}
+div.row {
+  margin-top: 16px;
+}
+div.row > * {
   margin-right: 8px;
 }
-label > *:last-child {
+.row > *:last-child {
   margin-right: 0;
 }
-input {
-  background-color: #ffffff;
-}
-button {
-  background-color: #f0f0f0;
-}
-input:focus, button:focus {
-  border-color: #abacad;
+.translation.removed {
+  opacity: 0.5;
 }
