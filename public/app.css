@@ -71,7 +71,7 @@ select:focus, select:hover {
 }
 select:active {
 }
-select.simple {
+select.button {
   background-image: none;
   padding-right: 8px;
 }
