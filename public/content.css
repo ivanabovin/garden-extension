@@ -4,8 +4,9 @@ iframe.jam {
   position: fixed;
   top: 0;
   right: 0;
-  width: 401px;
+  width: 50vw;
   height: 100vh;
   border: none;
   background: #ffffff;
+  border-left: 1px solid #dbdcdd;
 }

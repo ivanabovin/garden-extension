@@ -1,11 +1,8 @@
+body {
+  margin: 0;
+  padding: 0;
+}
 .root {
-  z-index: 9999;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 400px;
-  border-left: 1px solid #dbdcdd;
   background: #ffffff;
   color: #404040;
   font-family: "Segoe UI", sans-serif;
@@ -18,14 +15,35 @@
 code, pre {
   font-family: 'Consolas', monospace;
 }
-input, button {
+input, button, select {
   display: inline-block;
-  padding: 0 10px;
   border: 1px solid #dbdcdd;
+  height: 32px;
+  width: 120px;
+  padding: 0 10px;
+  margin: 0;
+  line-height: 30px;
   outline: none;
   font-family: inherit;
   font-size: inherit;
-  line-height: 30px;
+  color: inherit;
+  vertical-align: middle;
+  appearance: none;
+}
+button {
+  cursor: pointer;
+}
+select {
+  cursor: pointer;
+  background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 550" width="32px" height="32px"><path d="m448.79 242.48-15.848-15.848-82.938 82.934-82.938-82.934-15.848 15.848 98.785 98.785z" fill="%23404040"/></svg>');
+  background-position: right center;
+  background-repeat: no-repeat;
+}
+label > * {
+  margin-right: 8px;
+}
+label > *:last-child {
+  margin-right: 0;
 }
 input {
   background-color: #ffffff;
