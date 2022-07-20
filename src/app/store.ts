@@ -86,7 +86,7 @@ export class Store {
   }
 
   private save() {
-    const translations = this.translations.filter(t => !t.removed).map(t => t.lang);
+    const translations = this.translations.map(t => t.lang);
     save('lang', this.lang);
     save('text', this.text);
     save('translations', translations);

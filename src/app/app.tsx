@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { Language, store, Translation } from './store';
 import { runInAction } from 'mobx';
 import { api } from './api';
+import cn from 'classnames';
 
 export const TextBox = observer(() => {
   const onChangeLang = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
@@ -43,14 +44,14 @@ export const TranslationBox = observer(({ translation }: { translation: Translat
     runInAction(() => translation.removed = false);
   }, []);
   const language = Language.take(translation.lang);
-  const removed = translation.removed ? 'removed' : '';
-  return <div className={'row translation ' + removed} style={{ marginTop: 8 }}>
+  const { removed } = translation;
+  return <div className={cn('row', 'translation', removed && 'removed')} style={{ marginTop: 8 }}>
     <select className="button" style={{ fontWeight: 600 }}
       value={translation.lang} title={language.title} onChange={onChangeLang}>
       {Language.all.map(lang => <option key={lang.code} value={lang.code} title={lang.title}>{lang.code}</option>)}
     </select>
     <input value={translation.text} onChange={onChangeText} />
-    <button className="link" title="Remove" onClick={onClickDelete}>&#x2716;</button>
+    <button className={cn('link', removed && 'remove')} title="Remove" onClick={onClickDelete}>&#x2716;</button>
     {translation.removed && <button className="link" title="Restore" onClick={onClickRestore}>&#x25cb;</button>}
   </div>;
 });

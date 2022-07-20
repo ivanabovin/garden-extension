@@ -87,3 +87,6 @@ div.row > * {
 .translation.removed {
   opacity: 0.5;
 }
+.translation button.remove {
+  transform: scale(1.2);
+}
