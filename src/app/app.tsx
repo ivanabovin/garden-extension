@@ -2,7 +2,6 @@ import React, { ChangeEvent, useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Language, store, Translation } from './store';
 import { runInAction } from 'mobx';
-import { api } from './api';
 import cn from 'classnames';
 
 export const TextBox = observer(() => {
@@ -15,7 +14,7 @@ export const TextBox = observer(() => {
     runInAction(() => store.text = text);
   }, []);
   const onClickTranslate = useCallback(() => {
-    api.translate();
+    void store.translate();
   }, []);
   const language = Language.take(store.lang);
   return <div className="text-box">

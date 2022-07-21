@@ -1,6 +1,7 @@
-import { autorun, makeAutoObservable } from 'mobx';
+import { autorun, makeAutoObservable, runInAction } from 'mobx';
 import { loadString, parseArray, save } from './util/storage';
 import { ensureDefined } from './util/object';
+import { translate } from './api/translate';
 
 export class Language {
   code: string;
@@ -32,14 +33,7 @@ export class Language {
 }
 
 export class Alternative {
-  readonly lang: string;
-  readonly result: string;
-  hint: string = '';
-
-  constructor(lang: string, result: string) {
-    makeAutoObservable(this);
-    this.lang = lang;
-    this.result = result;
+  constructor(readonly result: string, readonly hint: string) {
   }
 }
 
@@ -67,7 +61,7 @@ export class Translation {
 export class Store {
   busy = false;
   lang: string = 'en';
-  my: string = 'ru';
+  second: string = 'ru';
   text: string = '';
   translations: Translation[] = [];
 
@@ -93,6 +87,27 @@ export class Store {
     }
     const index = this.translations.indexOf(translation);
     if (index >= 0) this.translations.splice(index, 1);
+  }
+
+  async translate() {
+    if (this.busy) throw new Error('busy');
+    runInAction(() => {
+      this.busy = true;
+      this.translations.forEach(t => t.clear());
+    });
+    try {
+      const translations = this.translations.filter(t => !t.disabled);
+      const languages = Array.from(new Set(translations.map(t => t.lang))).sort();
+      const results = await translate(this.lang, this.second, this.text, languages);
+      runInAction(() => {
+        translations.forEach(t => t.alternatives = results[t.lang]
+          .alternatives.map(a => new Alternative(a.result, a.hint)));
+      });
+    } catch (e) {
+      console.error('translate error', e);
+    } finally {
+      runInAction(() => this.busy = false);
+    }
   }
 
   private load() {
