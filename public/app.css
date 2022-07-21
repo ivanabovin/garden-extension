@@ -75,14 +75,17 @@ select.button {
   background-image: none;
   padding-right: 8px;
 }
-div.row {
+div.block {
   margin-top: 16px;
 }
-div.row > * {
+div.block > * {
   margin-right: 8px;
 }
-.row > *:last-child {
+.block > *:last-child {
   margin-right: 0;
+}
+.translation select.lang {
+  border-color: transparent;
 }
 .translation.disabled {
   opacity: 0.5;
