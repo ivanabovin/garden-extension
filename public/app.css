@@ -19,7 +19,7 @@ body::-webkit-scrollbar {
 .app {
   margin: 16px;
 }
-h4 {
+.main-title {
   margin: 16px 0;
 }
 code, pre {
@@ -27,6 +27,10 @@ code, pre {
 }
 .text {
   vertical-align: middle;
+}
+strong, .strong {
+  color: #505050;
+  font-weight: 700;
 }
 input, button, select {
   display: inline-block;
@@ -42,11 +46,6 @@ input, button, select {
   vertical-align: middle;
   appearance: none;
 }
-input:not(:first-child),
-button:not(:first-child),
-select:not(:first-child) {
-  margin-left: 8px;
-}
 input {
   width: 120px;
   background-color: #ffffff;
@@ -56,13 +55,13 @@ input:focus, input:hover {
 }
 button {
   cursor: pointer;
-  background-color: #f0f0f0;
+  background-color: #f8f8f8;
 }
 button:focus, button:hover {
   border-color: #abacad;
 }
 button:active {
-  transform: scale(0.9);
+  background-color: #f0f0f0;
 }
 button:disabled, button.disabled {
   color: #b0b0b0;
@@ -96,6 +95,9 @@ select.button {
 .text-box {
   margin-top: 16px;
 }
+.text-box > :not(:last-child) {
+  margin-right: 8px;
+}
 .text-box > input {
   width: 240px;
 }
@@ -113,17 +115,16 @@ select.button {
   opacity: 0.5;
 }
 .translation-box > select.lang {
-  font-weight: 600;
   border-color: transparent;
 }
 .translation-box > button.remove {
-  transform: scale(1.2);
 }
 .translation-box .translation {
   display: flex;
   flex-flow: column;
   width: 240px;
   min-height: 32px;
+  margin: 0 8px;
   padding-left: 8px;
 }
 .translation-box > .translation > .item {

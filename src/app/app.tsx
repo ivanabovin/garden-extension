@@ -19,8 +19,7 @@ export const TextBox = observer(() => {
   }, []);
   const language = Language.take(store.lang);
   return <div className="text-box">
-    <select className="button" style={{ fontWeight: 600 }}
-      value={store.lang} title={language.title} onChange={onChangeLang}>
+    <select className="button strong" value={store.lang} title={language.title} onChange={onChangeLang}>
       {Language.all.map(lang => <option key={lang.code} value={lang.code} title={lang.title}>{lang.code}</option>)}
     </select>
     <input value={store.text} onChange={onChangeText} />
@@ -42,7 +41,7 @@ export const TranslationBox = observer(({ translation }: { translation: Translat
   const language = Language.take(translation.lang);
   const { disabled } = translation;
   return <div className={cn('translation-box', disabled && 'disabled')}>
-    <select className="button lang" value={translation.lang} title={language.title} onChange={onChangeLang}>
+    <select className="button strong lang" value={translation.lang} title={language.title} onChange={onChangeLang}>
       {Language.all.map(lang => <option key={lang.code} value={lang.code} title={lang.title}>{lang.code}</option>)}
     </select>
     <div className="translation">
@@ -61,7 +60,7 @@ export const App = observer(() => {
     store.addTranslation();
   }, []);
   return <div className="app">
-    <h4>Jam</h4>
+    <strong className="main-title">Jam</strong>
     <div>
       <TextBox />
     </div>
