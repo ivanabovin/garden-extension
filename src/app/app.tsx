@@ -77,12 +77,14 @@ export const TranslationBox = observer(({ translation }: { translation: Translat
           <span className="hint">{a.hint}</span>
         </div>
         <div className="actions">
-          <button className="link" onClick={() => onClickCopy(a)}>&#x1F4C4;</button>
-          <button className="link" onClick={() => onClickPlay(a)}>&#x25B6;</button>
+          <button className="link copy" onClick={() => onClickCopy(a)}></button>
+          <button className="link play" onClick={() => onClickPlay(a)}></button>
         </div>
       </div>)}
     </div>
-    <button className="link remove" title="Remove" onClick={onClickDelete}>&#x2716;</button>
+    <div className="buttons">
+      <button className="link remove" title="Remove" onClick={onClickDelete}>&#x2716;</button>
+    </div>
   </div>;
 });
 
