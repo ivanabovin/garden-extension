@@ -98,7 +98,7 @@ select.button {
 .text-box > .row > :not(:last-child) {
   margin-right: 8px;
 }
-.text-box > input {
+.text-box > .row > input {
   width: 240px;
 }
 .translation-title {
