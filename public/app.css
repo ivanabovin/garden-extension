@@ -33,25 +33,59 @@ strong, .strong {
   font-weight: 700;
 }
 input, button, select {
+  appearance: none;
   display: inline-block;
-  border: 1px solid #dbdcdd;
+  vertical-align: middle;
   height: 32px;
   padding: 0 8px;
   margin: 0;
+  border: 1px solid #dbdcdd;
   line-height: 30px;
   outline: none;
   font-family: inherit;
   font-size: inherit;
   color: inherit;
-  vertical-align: middle;
-  appearance: none;
 }
 input {
-  width: 120px;
   background-color: #ffffff;
 }
 input:focus, input:hover {
   border-color: #abacad;
+}
+input:not([type]), input[type=text], input[type=password] {
+  width: 120px;
+}
+input[type=checkbox] {
+  position: relative;
+  width: 32px;
+  border-color: transparent;
+  cursor: pointer;
+}
+input[type=checkbox]:before {
+  content: '';
+  position: absolute;
+  box-sizing: border-box;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border: 1px solid #dbdcdd;
+}
+input[type=checkbox]:after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  right: 0;
+  bottom: 0;
+  left: 1px;
+  background-image: none;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+input[type=checkbox]:checked:after {
+  background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="12" height="12"><polygon fill="%23606060" points="11.941,28.877 0,16.935 5.695,11.24 11.941,17.486 26.305,3.123 32,8.818"/></svg>');
 }
 button {
   cursor: pointer;
@@ -70,7 +104,7 @@ button:disabled, button.disabled {
 }
 button.link {
   background: none;
-  border: none;
+  border-color: transparent;
   color: #808080;
 }
 button.link:focus, button.link:hover {
@@ -78,10 +112,14 @@ button.link:focus, button.link:hover {
 }
 select {
   cursor: pointer;
+  background-color: #ffffff;
   background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 550" width="32px" height="32px"><path d="m448.79 242.48-15.848-15.848-82.938 82.934-82.938-82.934-15.848 15.848 98.785 98.785z" fill="%23404040"/></svg>');
   background-position: right center;
   background-repeat: no-repeat;
   padding-right: 32px;
+}
+select > option {
+  color: #404040;
 }
 select:focus, select:hover {
   border-color: #abacad;
@@ -91,15 +129,21 @@ select:active {
 select.button {
   background-image: none;
   padding-right: 8px;
+  min-width: 32px;
 }
 .text-box {
   margin-top: 16px;
 }
+.text-box > .row:not(:last-child) {
+  margin-bottom: 8px;
+}
 .text-box > .row > :not(:last-child) {
   margin-right: 8px;
 }
-.text-box > .row > input {
+.text-box > .row > input.text {
   width: 240px;
+}
+.text-box > .row > select.second {
 }
 .translation-title {
   margin: 16px 0;
