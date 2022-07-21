@@ -17,10 +17,16 @@ body::-webkit-scrollbar {
   width: 400px;
 }
 .app {
-  padding: 16px;
+  margin: 16px;
+}
+h4 {
+  margin: 16px 0;
 }
 code, pre {
   font-family: 'Consolas', monospace;
+}
+.text {
+  vertical-align: middle;
 }
 input, button, select {
   display: inline-block;
@@ -35,6 +41,11 @@ input, button, select {
   color: inherit;
   vertical-align: middle;
   appearance: none;
+}
+input:not(:first-child),
+button:not(:first-child),
+select:not(:first-child) {
+  margin-left: 8px;
 }
 input {
   width: 120px;
@@ -82,17 +93,14 @@ select.button {
   background-image: none;
   padding-right: 8px;
 }
-div.block {
+.text-box {
   margin-top: 16px;
-}
-div.block > * {
-  margin-right: 8px;
-}
-div.block > *:last-child {
-  margin-right: 0;
 }
 .text-box > input {
   width: 240px;
+}
+.translation-title {
+  margin: 16px 0;
 }
 .translation-box {
   display: flex;
