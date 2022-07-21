@@ -1,8 +1,10 @@
 import React, { ChangeEvent, useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Language, store, Translation } from './store';
+import { Alternative, Language, store, Translation } from './store';
 import { runInAction } from 'mobx';
 import cn from 'classnames';
+import { player } from './player';
+import { copyText } from './util/clipboard';
 
 function getLanguageOptions() {
   return Language.all.map(lang => <option key={lang.code} value={lang.code} title={lang.title}>{lang.code}</option>);
@@ -59,16 +61,28 @@ export const TranslationBox = observer(({ translation }: { translation: Translat
   const onClickRestore = useCallback(() => {
     runInAction(() => translation.disabled = false);
   }, []);
+  const onClickPlay = useCallback((a: Alternative) => {
+    player.play(translation.lang, a.result);
+  }, []);
+  const onClickCopy = useCallback((a: Alternative) => {
+    void copyText(a.result);
+  }, []);
   const { disabled } = translation;
   return <div className={cn('translation-box', disabled && 'disabled')}>
     <select className="button strong lang" value={translation.lang}
       title={Language.title(translation.lang)} onChange={onChangeLang}>
       {getLanguageOptions()}
     </select>
-    <div className="translation">
+    <div className="translations">
       {translation.alternatives.map((a, i) => <div key={i} className="item">
-        <span className="result">{a.result}</span>
-        <span className="hint">{a.hint}</span>
+        <div className="translation">
+          <span className="result">{a.result}</span>
+          <span className="hint">{a.hint}</span>
+        </div>
+        <div className="actions">
+          <button className="link" onClick={() => onClickPlay(a)}>&#x25B6;</button>
+          <button className="link" onClick={() => onClickCopy(a)}>&#x1F4C4;</button>
+        </div>
       </div>)}
     </div>
     <button className={cn('link', disabled && 'remove')} title="Remove" onClick={onClickDelete}>&#x2716;</button>
