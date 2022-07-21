@@ -2,6 +2,9 @@ body {
   margin: 0;
   padding: 0;
 }
+* {
+  box-sizing: border-box;
+}
 .root {
   background: #ffffff;
   color: #404040;
@@ -81,15 +84,49 @@ div.block {
 div.block > * {
   margin-right: 8px;
 }
-.block > *:last-child {
+div.block > *:last-child {
   margin-right: 0;
 }
-.translation select.lang {
-  border-color: transparent;
+.text-box > input {
+  width: 240px;
 }
-.translation.disabled {
+.translation-box {
+  display: flex;
+  margin-bottom: 16px;
+}
+.translation-box:last-child {
+  margin-bottom: 0;
+}
+.translation-box.disabled {
   opacity: 0.5;
 }
-.translation button.remove {
+.translation-box > select.lang {
+  font-weight: 600;
+  border-color: transparent;
+}
+.translation-box > button.remove {
   transform: scale(1.2);
+}
+.translation-box .translation {
+  display: flex;
+  flex-flow: column;
+  width: 240px;
+  padding-left: 8px;
+  border-left: 1px solid #e0e0e0;
+}
+.translation-box > .translation > .item {
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 4px;
+}
+.translation-box > .translation > .item:last-child {
+  margin-bottom: 0;
+}
+.translation-box > .translation > .item > .result {
+  line-height: 20px;
+}
+.translation-box > .translation > .item > .source {
+  color: #c0c0c0;
+  font-size: 12px;
+  line-height: 12px;
 }

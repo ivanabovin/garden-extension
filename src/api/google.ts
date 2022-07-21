@@ -1,7 +1,7 @@
 // https://wiki.freepascal.org/Using_Google_Translate
 // GET https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=fr&dt=t&dt=bd&dt=at&dj=1&q=order+created
 
-export type TranslateResponse = {
+export type GoogleTranslateResponse = {
   sentences: Array<{
     trans: string,
     orig: string,
@@ -36,9 +36,8 @@ export type TranslateResponse = {
   // spell: object
 };
 
-export async function translate(from: string, to: string, text: string): Promise<string> {
+export async function googleTranslate(from: string, to: string, text: string): Promise<GoogleTranslateResponse> {
   const url = 'https://translate.googleapis.com/translate_a/single';
-  const response = await fetch(`${url}?client=gtx&sl=${from}&tl=${to}&dt=t&dj=1&q=${encodeURIComponent(text)}`);
-  const json = await response.json() as TranslateResponse;
-  return json.sentences[0].trans;
+  const response = await fetch(`${url}?client=gtx&dj=1&sl=${from}&tl=${to}&q=${encodeURIComponent(text)}&dt=t&dt=at`);
+  return await response.json();
 }

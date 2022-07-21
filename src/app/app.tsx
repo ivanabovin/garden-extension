@@ -18,7 +18,7 @@ export const TextBox = observer(() => {
     api.translate();
   }, []);
   const language = Language.take(store.lang);
-  return <div className="block">
+  return <div className="block text-box">
     <select className="button" style={{ fontWeight: 600 }}
       value={store.lang} title={language.title} onChange={onChangeLang}>
       {Language.all.map(lang => <option key={lang.code} value={lang.code} title={lang.title}>{lang.code}</option>)}
@@ -33,10 +33,6 @@ export const TranslationBox = observer(({ translation }: { translation: Translat
     const code = e.target.value;
     runInAction(() => translation.lang = code);
   }, []);
-  const onChangeText = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const text = e.target.value;
-    runInAction(() => translation.text = text);
-  }, []);
   const onClickDelete = useCallback(() => {
     store.removeTranslation(translation);
   }, []);
@@ -45,12 +41,16 @@ export const TranslationBox = observer(({ translation }: { translation: Translat
   }, []);
   const language = Language.take(translation.lang);
   const { disabled } = translation;
-  return <div className={cn('block', 'translation', disabled && 'disabled')} style={{ marginTop: 8 }}>
-    <select className="button lang" style={{ fontWeight: 600 }}
-      value={translation.lang} title={language.title} onChange={onChangeLang}>
+  return <div className={cn('block', 'translation-box', disabled && 'disabled')}>
+    <select className="button lang" value={translation.lang} title={language.title} onChange={onChangeLang}>
       {Language.all.map(lang => <option key={lang.code} value={lang.code} title={lang.title}>{lang.code}</option>)}
     </select>
-    <input value={translation.text} onChange={onChangeText} />
+    <div className="translation">
+      {translation.alternatives.map((a, i) => <div key={i} className="item">
+        <span className="result">{a.result}</span>
+        <span className="source">{a.source}</span>
+      </div>)}
+    </div>
     <button className={cn('link', disabled && 'remove')} title="Remove" onClick={onClickDelete}>&#x2716;</button>
     {translation.disabled && <button className="link" title="Restore" onClick={onClickRestore}>&#x25cb;</button>}
   </div>;

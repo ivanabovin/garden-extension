@@ -31,17 +31,28 @@ export class Language {
   }
 }
 
+export class Alternative {
+  constructor(readonly source: string, readonly result: string) {
+  }
+}
+
 export class Translation {
   private static $ID = 0;
   readonly $id = ++Translation.$ID;
 
   lang: string = 'en';
   text: string = '';
+  alternatives: Alternative[] = [];
   disabled = false;
 
   constructor(lang: string) {
     makeAutoObservable(this);
     this.lang = lang;
+  }
+
+  clear() {
+    this.text = '';
+    this.alternatives = [];
   }
 
   static parse(lang: string): Translation | undefined {
