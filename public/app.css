@@ -95,7 +95,7 @@ select.button {
 .text-box {
   margin-top: 16px;
 }
-.text-box > :not(:last-child) {
+.text-box > .row > :not(:last-child) {
   margin-right: 8px;
 }
 .text-box > input {
@@ -119,7 +119,7 @@ select.button {
 }
 .translation-box > button.remove {
 }
-.translation-box .translation {
+.translation-box > .translation {
   display: flex;
   flex-flow: column;
   width: 240px;
