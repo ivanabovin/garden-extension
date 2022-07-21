@@ -150,7 +150,7 @@ select.button {
 }
 .translation-box {
   display: flex;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 .translation-box:last-child {
   margin-bottom: 0;
@@ -185,7 +185,7 @@ select.button {
   font-size: 14px;
 }
 .translation-box > .translation > .item > .hint {
-  min-height: 14px;
+  min-height: 4px;
   line-height: 14px;
   font-size: 12px;
   color: #c0c0c0;
