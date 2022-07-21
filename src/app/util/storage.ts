@@ -6,6 +6,12 @@ export function loadUnknown(key: string): unknown | undefined {
   return JSON.parse(json) as unknown;
 }
 
+export function loadBoolean(key: string): boolean | undefined {
+  const value = loadUnknown(key);
+  if (typeof value !== 'boolean') return undefined;
+  return value;
+}
+
 export function loadString(key: string): string | undefined {
   const value = loadUnknown(key);
   if (typeof value !== 'string') return undefined;

@@ -1,10 +1,10 @@
 import { googleTranslate } from './google';
 import { ensureString } from '../util/object';
 
-export type TranArgs = {
+type TranArgs = {
   from: string,
   to: string,
-  second: string,
+  second: string | null,
   text: string
 }
 
@@ -30,6 +30,7 @@ async function getAlts(args: TranArgs) {
 }
 
 async function enrichHint(args: TranArgs, alternative: TranAlt) {
+  if (!args.second) return;
   const response = await googleTranslate(args.to, args.second, alternative.result, false);
   alternative.hint = ensureString(response.sentences[0].trans);
 }
@@ -40,7 +41,7 @@ async function enrichAlts(args: TranArgs, result: TranResult) {
   result[args.to] = { alternatives };
 }
 
-export async function translate(from: string, second: string, text: string, languages: string[]): Promise<TranResult> {
+export async function translate(from: string, second: string | null, text: string, languages: string[]): Promise<TranResult> {
   const result: TranResult = {};
   await Promise.all([...languages].map(to => {
     const args = { from, to, second, text };

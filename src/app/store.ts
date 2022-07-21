@@ -1,5 +1,5 @@
 import { autorun, makeAutoObservable, runInAction } from 'mobx';
-import { loadString, parseArray, save } from './util/storage';
+import { loadBoolean, loadString, parseArray, parseString, save } from './util/storage';
 import { ensureDefined } from './util/object';
 import { translate } from './api/translate';
 
@@ -30,6 +30,10 @@ export class Language {
   static take(code: string): Language {
     return ensureDefined(Language.find(code), () => 'language: ' + code);
   }
+
+  static title(code: string): string {
+    return Language.take(code).title;
+  }
 }
 
 export class Alternative {
@@ -49,12 +53,8 @@ export class Translation {
     this.lang = lang;
   }
 
-  clear() {
-    this.alternatives = [];
-  }
-
   static parse(lang: string): Translation | undefined {
-    return new Translation(lang);
+    return Language.find(lang) ? new Translation(lang) : undefined;
   }
 }
 
@@ -62,6 +62,7 @@ export class Store {
   busy = false;
   lang: string = 'en';
   second: string = 'ru';
+  retranslation: boolean = true;
   text: string = '';
   translations: Translation[] = [];
 
@@ -93,32 +94,35 @@ export class Store {
     if (this.busy) throw new Error('busy');
     runInAction(() => {
       this.busy = true;
-      this.translations.forEach(t => t.clear());
     });
     try {
-      const translations = this.translations.filter(t => !t.disabled);
-      const languages = Array.from(new Set(translations.map(t => t.lang))).sort();
-      const results = await translate(this.lang, this.second, this.text, languages);
+      const languages = Array.from(new Set(this.translations.filter(t => !t.disabled).map(t => t.lang))).sort();
+      const results = await translate(this.lang, this.retranslation ? this.second : null, this.text, languages);
       runInAction(() => {
-        translations.forEach(t => t.alternatives = results[t.lang]
-          .alternatives.map(a => new Alternative(a.result, a.hint)));
+        this.translations.forEach(t => t.alternatives = t.disabled ? [] :
+          results[t.lang].alternatives.map(a => new Alternative(a.result, a.hint)));
       });
     } catch (e) {
       console.error('translate error', e);
+      runInAction(() => this.translations.forEach(t => t.alternatives = []));
     } finally {
       runInAction(() => this.busy = false);
     }
   }
 
   private load() {
-    this.lang = loadString('lang') ?? 'en';
-    this.text = loadString('text') ?? '';
-    this.translations = parseArray('translations', Translation.parse) ?? [];
+    this.lang = parseString('lang', code => Language.find(code)?.code) ?? 'en';
+    this.second = parseString('second', code => Language.find(code)?.code) ?? 'en';
+    this.retranslation = loadBoolean('retranslation') ?? true;
+    this.text = loadString('text') ?? 'jam';
+    this.translations = parseArray('translations', Translation.parse) ?? [new Translation('fr')];
   }
 
   private save() {
     const translations = this.translations.map(t => t.lang);
     save('lang', this.lang);
+    save('second', this.second);
+    save('retranslation', this.retranslation);
     save('text', this.text);
     save('translations', translations);
   }
