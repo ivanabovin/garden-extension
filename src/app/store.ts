@@ -82,10 +82,6 @@ export class Store {
   }
 
   removeTranslation(translation: Translation) {
-    if (!translation.disabled) {
-      translation.disabled = true;
-      return;
-    }
     const index = this.translations.indexOf(translation);
     if (index >= 0) this.translations.splice(index, 1);
   }

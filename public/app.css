@@ -158,10 +158,12 @@ select.button {
 .translation-box.disabled {
   opacity: 0.5;
 }
-.translation-box > select.lang {
-  /*border-color: transparent;*/
-}
 .translation-box > button.remove {
+  opacity: 0;
+}
+.translation-box:hover > button.remove {
+  opacity: 1;
+  transition: opacity ease-in 100ms;
 }
 .translation-box > .translations {
   display: flex;
@@ -202,8 +204,8 @@ select.button {
   left: 0;
   background: rgba(255, 255, 255, 80%);
   z-index: 1;
-  transition: opacity ease-in 100ms 100ms;
 }
 .translation-box > .translations > .item:hover > .actions {
   opacity: 1;
+  transition: opacity ease-in 100ms;
 }

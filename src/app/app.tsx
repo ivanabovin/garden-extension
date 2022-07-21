@@ -58,9 +58,6 @@ export const TranslationBox = observer(({ translation }: { translation: Translat
   const onClickDelete = useCallback(() => {
     store.removeTranslation(translation);
   }, []);
-  const onClickRestore = useCallback(() => {
-    runInAction(() => translation.disabled = false);
-  }, []);
   const onClickPlay = useCallback((a: Alternative) => {
     player.play(translation.lang, a.result);
   }, []);
@@ -69,7 +66,7 @@ export const TranslationBox = observer(({ translation }: { translation: Translat
   }, []);
   const { disabled } = translation;
   return <div className={cn('translation-box', disabled && 'disabled')}>
-    <select className="button strong lang" value={translation.lang}
+    <select className="button strong" value={translation.lang}
       title={Language.title(translation.lang)} onChange={onChangeLang}>
       {getLanguageOptions()}
     </select>
@@ -80,13 +77,12 @@ export const TranslationBox = observer(({ translation }: { translation: Translat
           <span className="hint">{a.hint}</span>
         </div>
         <div className="actions">
-          <button className="link" onClick={() => onClickPlay(a)}>&#x25B6;</button>
           <button className="link" onClick={() => onClickCopy(a)}>&#x1F4C4;</button>
+          <button className="link" onClick={() => onClickPlay(a)}>&#x25B6;</button>
         </div>
       </div>)}
     </div>
-    <button className={cn('link', disabled && 'remove')} title="Remove" onClick={onClickDelete}>&#x2716;</button>
-    {translation.disabled && <button className="link" title="Restore" onClick={onClickRestore}>&#x25cb;</button>}
+    <button className="link remove" title="Remove" onClick={onClickDelete}>&#x2716;</button>
   </div>;
 });
 
