@@ -36,8 +36,9 @@ export type GoogleTranslateResponse = {
   // spell: object
 };
 
-export async function googleTranslate(from: string, to: string, text: string): Promise<GoogleTranslateResponse> {
+export async function googleTranslate(from: string, to: string, text: string, alt: boolean): Promise<GoogleTranslateResponse> {
   const url = 'https://translate.googleapis.com/translate_a/single';
-  const response = await fetch(`${url}?client=gtx&dj=1&sl=${from}&tl=${to}&q=${encodeURIComponent(text)}&dt=t&dt=at`);
+  const dt = alt ? 'dt=at' : 'dt=t';
+  const response = await fetch(`${url}?client=gtx&dj=1&sl=${from}&tl=${to}&q=${encodeURIComponent(text)}&${dt}`);
   return await response.json();
 }

@@ -48,7 +48,7 @@ export const TranslationBox = observer(({ translation }: { translation: Translat
     <div className="translation">
       {translation.alternatives.map((a, i) => <div key={i} className="item">
         <span className="result">{a.result}</span>
-        <span className="source">{a.source}</span>
+        <span className="hint">{a.hint}</span>
       </div>)}
     </div>
     <button className={cn('link', disabled && 'remove')} title="Remove" onClick={onClickDelete}>&#x2716;</button>

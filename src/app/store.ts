@@ -32,16 +32,21 @@ export class Language {
 }
 
 export class Alternative {
-  constructor(readonly source: string, readonly result: string) {
+  readonly lang: string;
+  readonly result: string;
+  hint: string = '';
+
+  constructor(lang: string, result: string) {
+    makeAutoObservable(this);
+    this.lang = lang;
+    this.result = result;
   }
 }
 
 export class Translation {
   private static $ID = 0;
   readonly $id = ++Translation.$ID;
-
   lang: string = 'en';
-  text: string = '';
   alternatives: Alternative[] = [];
   disabled = false;
 
@@ -51,7 +56,6 @@ export class Translation {
   }
 
   clear() {
-    this.text = '';
     this.alternatives = [];
   }
 
@@ -63,6 +67,7 @@ export class Translation {
 export class Store {
   busy = false;
   lang: string = 'en';
+  my: string = 'ru';
   text: string = '';
   translations: Translation[] = [];
 
