@@ -4,11 +4,11 @@
   "version": "0.0",
   "action": {
     "default_icon": {
-      "512": "icon.png"
+      "128": "icon.png"
     }
   },
   "icons": {
-    "512": "icon.png"
+    "128": "icon.png"
   },
   "background": {
     "service_worker": "background.js"
