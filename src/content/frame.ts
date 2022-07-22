@@ -21,8 +21,8 @@ export class Frame {
 
   private render() {
     const frame = document.createElement('iframe');
-    frame.src = chrome.runtime.getURL('jam.html');
-    frame.classList.add('jam');
+    frame.src = chrome.runtime.getURL('garden.html');
+    frame.classList.add('garden');
     document.body.append(frame);
     this.frame = frame;
   }

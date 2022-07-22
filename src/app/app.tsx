@@ -93,7 +93,7 @@ export const App = observer(() => {
     store.addTranslation();
   }, []);
   return <div className="app">
-    <strong className="main-title">Jam</strong>
+    <strong className="main-title">Garden</strong>
     <div>
       <TextBox />
     </div>

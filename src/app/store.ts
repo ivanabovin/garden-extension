@@ -110,7 +110,7 @@ export class Store {
     this.lang = parseString('lang', code => Language.find(code)?.code) ?? 'en';
     this.second = parseString('second', code => Language.find(code)?.code) ?? 'en';
     this.retranslation = loadBoolean('retranslation') ?? true;
-    this.text = loadString('text') ?? 'jam';
+    this.text = loadString('text') ?? 'garden';
     this.translations = parseArray('translations', Translation.parse) ?? [new Translation('fr')];
   }
 

@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Jam",
+  "name": "Garden",
   "version": "0.0",
   "action": {
     "default_icon": {
@@ -38,7 +38,7 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "jam.html"
+        "garden.html"
       ],
       "matches": [
         "<all_urls>"
