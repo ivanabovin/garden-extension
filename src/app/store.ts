@@ -1,5 +1,5 @@
 import { autorun, makeAutoObservable, runInAction } from 'mobx';
-import { loadBoolean, loadString, parseArray, parseString, save } from './util/storage';
+import { loadString, parseArray, parseString, save } from './util/storage';
 import { ensureDefined } from './util/object';
 import { translate } from './api/translate';
 
@@ -61,8 +61,7 @@ export class Translation {
 export class Store {
   busy = false;
   lang: string = 'en';
-  second: string = 'ru';
-  retranslation: boolean = true;
+  retranslation: string | undefined;
   text: string = '';
   translations: Translation[] = [];
 
@@ -93,7 +92,7 @@ export class Store {
     });
     try {
       const languages = Array.from(new Set(this.translations.filter(t => !t.disabled).map(t => t.lang))).sort();
-      const results = await translate(this.lang, this.retranslation ? this.second : null, this.text, languages);
+      const results = await translate(this.lang, this.retranslation, this.text, languages);
       runInAction(() => {
         this.translations.forEach(t => t.alternatives = t.disabled ? [] :
           results[t.lang].alternatives.map(a => new Alternative(a.result, a.hint)));
@@ -108,8 +107,7 @@ export class Store {
 
   private load() {
     this.lang = parseString('lang', code => Language.find(code)?.code) ?? 'en';
-    this.second = parseString('second', code => Language.find(code)?.code) ?? 'en';
-    this.retranslation = loadBoolean('retranslation') ?? true;
+    this.retranslation = parseString('retranslation', code => Language.find(code)?.code);
     this.text = loadString('text') ?? 'garden';
     this.translations = parseArray('translations', Translation.parse) ?? [new Translation('fr')];
   }
@@ -117,7 +115,6 @@ export class Store {
   private save() {
     const translations = this.translations.map(t => t.lang);
     save('lang', this.lang);
-    save('second', this.second);
     save('retranslation', this.retranslation);
     save('text', this.text);
     save('translations', translations);

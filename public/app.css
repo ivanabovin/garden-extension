@@ -20,7 +20,14 @@ body::-webkit-scrollbar {
   margin: 16px;
 }
 .main-title {
-  margin: 16px 0;
+  display: inline-block;
+  margin: 0;
+  line-height: 32px;
+  padding-left: 46px;
+  background-image: url(color.png);
+  background-size: auto 32px;
+  background-repeat: no-repeat;
+  background-position: 0 -4px;
 }
 code, pre {
   font-family: 'Consolas', monospace;
@@ -121,6 +128,12 @@ select {
 }
 select > option {
   color: #404040;
+}
+select.gray {
+  color: #c0c0c0;
+}
+select > option.gray {
+  color: #c0c0c0;
 }
 select:focus, select:hover {
   border-color: #abacad;

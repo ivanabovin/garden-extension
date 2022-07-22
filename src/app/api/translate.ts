@@ -4,7 +4,7 @@ import { ensureString } from '../util/object';
 type TranArgs = {
   from: string,
   to: string,
-  second: string | null,
+  second: string | undefined,
   text: string
 }
 
@@ -41,7 +41,7 @@ async function enrichAlts(args: TranArgs, result: TranResult) {
   result[args.to] = { alternatives };
 }
 
-export async function translate(from: string, second: string | null, text: string, languages: string[]): Promise<TranResult> {
+export async function translate(from: string, second: string | undefined, text: string, languages: string[]): Promise<TranResult> {
   const result: TranResult = {};
   await Promise.all([...languages].map(to => {
     const args = { from, to, second, text };

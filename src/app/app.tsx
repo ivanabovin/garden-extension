@@ -6,8 +6,13 @@ import cn from 'classnames';
 import { player } from './player';
 import { copyText } from './util/clipboard';
 
-function getLanguageOptions() {
-  return Language.all.map(lang => <option key={lang.code} value={lang.code} title={lang.title}>{lang.code}</option>);
+function getLanguageOptions(remove?: { text: string, title: string }) {
+  const base = [];
+  if (remove) base.push(<option key={'x'} value={''} title={remove.title}
+    className="gray">{remove.text}</option>);
+  const languages = Language.all.map(lang => <option key={lang.code} value={lang.code}
+    title={lang.title}>{lang.code}</option>);
+  return base.concat(languages);
 }
 
 export const TextBox = observer(() => {
@@ -24,11 +29,7 @@ export const TextBox = observer(() => {
   }, []);
   const onChangeSecond = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
     const code = e.target.value;
-    runInAction(() => store.second = code);
-  }, []);
-  const onChangeRetranslation = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const checked = e.target.checked;
-    runInAction(() => store.retranslation = checked);
+    runInAction(() => store.retranslation = code || undefined);
   }, []);
   return <div className="text-box">
     <div className="row">
@@ -40,11 +41,11 @@ export const TextBox = observer(() => {
       <button disabled={store.busy} onClick={onClickTranslate}>Translate</button>
     </div>
     <div className="row">
-      <select className="button strong second" value={store.second} disabled={!store.retranslation}
-        title={Language.title(store.second)} onChange={onChangeSecond}>
-        {getLanguageOptions()}
+      <select className={cn('button strong second', store.retranslation || 'gray')}
+        value={store.retranslation || ''} onChange={onChangeSecond}
+        title={store.retranslation ? Language.title(store.retranslation) : 'None'}>
+        {getLanguageOptions({ text: 'no', title: 'None' })}
       </select>
-      <input type="checkbox" checked={store.retranslation} onChange={onChangeRetranslation} />
       <span className="text">Retranslation</span>
     </div>
   </div>;
@@ -53,7 +54,8 @@ export const TextBox = observer(() => {
 export const TranslationBox = observer(({ translation }: { translation: Translation }) => {
   const onChangeLang = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
     const code = e.target.value;
-    runInAction(() => translation.lang = code);
+    if (code) runInAction(() => translation.lang = code);
+    else store.removeTranslation(translation);
   }, []);
   const onClickDelete = useCallback(() => {
     store.removeTranslation(translation);
@@ -68,7 +70,7 @@ export const TranslationBox = observer(({ translation }: { translation: Translat
   return <div className={cn('translation-box', disabled && 'disabled')}>
     <select className="button strong" value={translation.lang}
       title={Language.title(translation.lang)} onChange={onChangeLang}>
-      {getLanguageOptions()}
+      {getLanguageOptions({ text: '\u{1F7A9}', title: 'Remove' })}
     </select>
     <div className="translations">
       {translation.alternatives.map((a, i) => <div key={i} className="item">
@@ -94,15 +96,11 @@ export const App = observer(() => {
   }, []);
   return <div className="app">
     <strong className="main-title">Garden</strong>
-    <div>
-      <TextBox />
-    </div>
+    <TextBox />
     <div className="translation-title">
       <strong className="text">Translations</strong>
       <button className="link" onClick={onClickAdd}>Add</button>
     </div>
-    <div>
-      {store.translations.map(translation => <TranslationBox key={translation.$id} translation={translation} />)}
-    </div>
+    {store.translations.map(translation => <TranslationBox key={translation.$id} translation={translation} />)}
   </div>;
 });
