@@ -8,7 +8,7 @@ chrome.runtime.onMessage.addListener((message, sender) => {
 });
 
 chrome.action.onClicked.addListener(async function (tab) {
-  if (tab.id) {
+  if (tab.id && tab.url?.startsWith('http')) {
     chrome.tabs.sendMessage(tab.id, { type: 'click' });
   }
 });
