@@ -31,6 +31,7 @@ export const TextBox = observer(() => {
     const code = e.target.value;
     runInAction(() => store.retranslation = code || undefined);
   }, []);
+  const empty = store.translations.length === 0;
   return <div className="text-box">
     <div className="row">
       <select className="button strong" value={store.lang}
@@ -38,10 +39,10 @@ export const TextBox = observer(() => {
         {getLanguageOptions()}
       </select>
       <input className="text" value={store.text} onChange={onChangeText} />
-      <button disabled={store.busy} onClick={onClickTranslate}>Translate</button>
+      <button disabled={store.busy || empty} onClick={onClickTranslate}>Translate</button>
     </div>
     <div className="row">
-      <select className={cn('button strong second', store.retranslation || 'gray')}
+      <select className={cn('button strong', store.retranslation || 'gray')}
         value={store.retranslation || ''} onChange={onChangeSecond}
         title={store.retranslation ? Language.title(store.retranslation) : 'None'}>
         {getLanguageOptions({ text: 'no', title: 'None' })}
@@ -73,7 +74,7 @@ export const TranslationBox = observer(({ translation }: { translation: Translat
       {getLanguageOptions({ text: '\u{1F7A9}', title: 'Remove' })}
     </select>
     <div className="translations">
-      {translation.alternatives.map((a, i) => <div key={i} className="item">
+      {translation.alternatives.map((a, i) => <div key={i} className={cn('item', a.hint || 'single')}>
         <div className="translation">
           <span className="result">{a.result}</span>
           <span className="hint">{a.hint}</span>

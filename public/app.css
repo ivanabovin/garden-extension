@@ -102,7 +102,7 @@ button {
 button:focus, button:hover {
   border-color: #abacad;
 }
-button:active {
+button:not(:disabled):not(.disabled):active {
   background-color: #f0f0f0;
 }
 button:disabled, button.disabled {
@@ -117,6 +117,10 @@ button.link {
 }
 button.link:focus, button.link:hover {
   opacity: 1;
+}
+button.link:not(:disabled):not(.disabled):active {
+  background-color: transparent;
+  opacity: 0.5;
 }
 select {
   cursor: pointer;
@@ -138,8 +142,6 @@ select > option.gray {
 select:focus, select:hover {
   border-color: #abacad;
 }
-select:active {
-}
 select.button {
   background-image: none;
   padding-right: 8px;
@@ -156,8 +158,7 @@ select.button {
 .text-box > .row > input.text {
   width: 240px;
 }
-.text-box > .row > select.second {
-}
+
 .translation-title {
   margin: 16px 0;
 }
@@ -214,9 +215,12 @@ select.button {
   top: 0;
   right: 0;
   bottom: -1px;
-  left: 0;
+  left: -2px;
   background: rgba(255, 255, 255, 90%);
   z-index: 1;
+}
+.translation-box > .translations > .item.single > .actions > button {
+  margin-top: -4px;
 }
 .translation-box > .translations > .item > .actions > button.copy {
   background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488.3 488.3" width="16" height="16"><g fill="%23404040"><path d="M314.25,85.4h-227c-21.3,0-38.6,17.3-38.6,38.6v325.7c0,21.3,17.3,38.6,38.6,38.6h227c21.3,0,38.6-17.3,38.6-38.6V124C352.75,102.7,335.45,85.4,314.25,85.4z M325.75,449.6c0,6.4-5.2,11.6-11.6,11.6h-227c-6.4,0-11.6-5.2-11.6-11.6V124c0-6.4,5.2-11.6,11.6-11.6h227c6.4,0,11.6,5.2,11.6,11.6V449.6z"/><path d="M401.05,0h-227c-21.3,0-38.6,17.3-38.6,38.6c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5c0-6.4,5.2-11.6,11.6-11.6h227c6.4,0,11.6,5.2,11.6,11.6v325.7c0,6.4-5.2,11.6-11.6,11.6c-7.5,0-13.5,6-13.5,13.5s6,13.5,13.5,13.5c21.3,0,38.6-17.3,38.6-38.6V38.6C439.65,17.3,422.35,0,401.05,0z"/></g></svg>');
