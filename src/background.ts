@@ -1,14 +1,27 @@
-chrome.runtime.onMessage.addListener((message, sender) => {
-  const tabId = sender.tab?.id;
-  if (message.type === 'show') {
-    const icon = message.show ? 'color.png' : 'gray.png';
-    chrome.action.setIcon({ tabId, path: icon });
+function isSite(tab: chrome.tabs.Tab | undefined): boolean {
+  return tab?.url?.startsWith('http') ?? false;
+}
+
+function updateIcon(tab: chrome.tabs.Tab, show: boolean) {
+  const icon = !isSite(tab) ? 'none.png' : show ? 'color.png' : 'gray.png';
+  chrome.action.setIcon({ tabId: tab.id, path: icon });
+}
+
+chrome.tabs.onUpdated.addListener((tabId, changes, tab) => {
+  const complete = changes.status === 'complete';
+  if (complete) {
+    updateIcon(tab, false);
   }
-  return true;
+});
+
+chrome.runtime.onMessage.addListener((message, sender) => {
+  if (sender.tab && message.type === 'show') {
+    updateIcon(sender.tab, message.show);
+  }
 });
 
 chrome.action.onClicked.addListener(async function (tab) {
-  if (tab.id && tab.url?.startsWith('http')) {
+  if (tab.id) {
     chrome.tabs.sendMessage(tab.id, { type: 'click' });
   }
 });
