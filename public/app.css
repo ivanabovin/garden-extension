@@ -35,6 +35,9 @@ code, pre {
 .text {
   vertical-align: middle;
 }
+.text.gray {
+  color: #a0a0a0;
+}
 strong, .strong {
   color: #505050;
   font-weight: 700;

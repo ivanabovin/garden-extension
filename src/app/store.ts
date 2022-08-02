@@ -1,6 +1,5 @@
-import { autorun, makeAutoObservable, runInAction } from 'mobx';
-import { loadString, parseArray, parseString, save } from './util/storage';
-import { ensureDefined } from './util/object';
+import { action, autorun, makeAutoObservable, runInAction } from 'mobx';
+import { ensureDefined, isDefined } from './util/object';
 import { translate } from './api/translate';
 
 export class Language {
@@ -23,8 +22,8 @@ export class Language {
     this.title = title;
   }
 
-  static find(code: string): Language | undefined {
-    return Language.all.find(lang => lang.code === code);
+  static find(code: string | undefined): Language | undefined {
+    return code == null ? undefined : Language.all.find(lang => lang.code === code);
   }
 
   static take(code: string): Language {
@@ -67,9 +66,12 @@ export class Store {
 
   constructor() {
     makeAutoObservable(this);
-    this.load();
-    autorun(() => {
-      this.save();
+  }
+
+  async config() {
+    await this.load();
+    autorun(async () => {
+      await this.save();
     });
   }
 
@@ -105,19 +107,23 @@ export class Store {
     }
   }
 
-  private load() {
-    this.lang = parseString('lang', code => Language.find(code)?.code) ?? 'en';
-    this.retranslation = parseString('retranslation', code => Language.find(code)?.code);
-    this.text = loadString('text') ?? 'garden';
-    this.translations = parseArray('translations', Translation.parse) ?? [new Translation('fr')];
+  private async load() {
+    chrome.storage.sync.get(['lang', 'retranslation', 'text', 'translations'], action(data => {
+      this.lang = Language.find(data.lang)?.code ?? 'en';
+      this.retranslation = Language.find(data.retranslation)?.code;
+      this.text = data.text ?? 'garden';
+      this.translations = (data.translations as string[] ?? ['fr'])
+        .map(lang => Translation.parse(lang)).filter(isDefined);
+    }));
   }
 
-  private save() {
-    const translations = this.translations.map(t => t.lang);
-    save('lang', this.lang);
-    save('retranslation', this.retranslation);
-    save('text', this.text);
-    save('translations', translations);
+  private async save() {
+    await chrome.storage.sync.set({
+      lang: this.lang,
+      retranslation: this.retranslation,
+      text: this.text,
+      translations: this.translations.map(t => t.lang),
+    });
   }
 }
 
