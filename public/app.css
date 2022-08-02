@@ -35,9 +35,6 @@ code, pre {
 .text {
   vertical-align: middle;
 }
-.text.gray {
-  color: #a0a0a0;
-}
 strong, .strong {
   color: #505050;
   font-weight: 700;
@@ -161,7 +158,10 @@ select.button {
 .text-box > .row > input.text {
   width: 240px;
 }
-
+.text-box .label {
+  color: #a0a0a0;
+  margin-left: 8px;
+}
 .translation-title {
   margin: 16px 0;
 }
@@ -175,19 +175,27 @@ select.button {
 .translation-box.disabled {
   opacity: 0.5;
 }
+.translation-box > select {
+  flex-shrink: 0;
+}
 .translation-box > .buttons {
+  z-index: 1;
   opacity: 0;
+  margin-left: -32px;
+  flex-shrink: 0;
 }
 .translation-box:hover > .buttons {
   opacity: 1;
-  transition: opacity ease-in 100ms;
+}
+.translation-box:hover > .buttons > button {
+  background-color: rgba(255, 255, 255, 90%);
 }
 .translation-box > .translations {
   display: flex;
   flex-flow: column;
-  min-width: 240px;
+  min-width: 312px;
   min-height: 32px;
-  margin: 0 8px;
+  margin-left: 16px;
 }
 .translation-box > .translations > .item {
   display: flex;
@@ -199,7 +207,7 @@ select.button {
 .translation-box > .translations > .item > .translation {
   display: flex;
   flex-flow: column;
-  width: 240px;
+  overflow-wrap: anywhere;
 }
 .translation-box > .translations > .item > .translation > .result {
   min-height: 18px;
@@ -213,14 +221,14 @@ select.button {
   color: #c0c0c0;
 }
 .translation-box > .translations > .item > .actions {
+  z-index: 1;
   opacity: 0;
   position: absolute;
   top: 0;
   right: 0;
   bottom: -1px;
   left: -2px;
-  background: rgba(255, 255, 255, 90%);
-  z-index: 1;
+  background-color: rgba(255, 255, 255, 90%);
 }
 .translation-box > .translations > .item.single > .actions > button {
   margin-top: -4px;
@@ -237,5 +245,4 @@ select.button {
 }
 .translation-box > .translations > .item:hover > .actions {
   opacity: 1;
-  transition: opacity ease-in 100ms;
 }

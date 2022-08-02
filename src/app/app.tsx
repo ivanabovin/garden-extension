@@ -47,7 +47,7 @@ export const TextBox = observer(() => {
         title={store.retranslation ? Language.title(store.retranslation) : 'None'}>
         {getLanguageOptions({ text: 'no', title: 'None' })}
       </select>
-      <span className="text gray">Retranslation</span>
+      <span className="text label">Retranslation</span>
     </div>
   </div>;
 });
