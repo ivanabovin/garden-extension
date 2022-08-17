@@ -15,7 +15,7 @@ function config(env, argv) {
       app: path('src/app/index.ts'),
     },
     output: {
-      path: path('dist'),
+      path: path('build'),
       filename: '[name].js',
     },
     optimization: {},
@@ -34,7 +34,7 @@ function config(env, argv) {
     },
     plugins: [
       new CopyPlugin({
-        patterns: [{ from: path('public'), to: path('dist') }],
+        patterns: [{ from: path('public'), to: path('build') }],
         options: {},
       }),
     ],
